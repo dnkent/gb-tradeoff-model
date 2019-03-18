@@ -1,0 +1,277 @@
+% !BIB program = bibtex
+
+\documentclass[12pt]{article}
+\usepackage[left=1in,top=1in,right=1in,bottom=1in]{geometry}
+\newcommand*{\authorfont}{\fontfamily{phv}\selectfont}
+
+%%%%%%%%%%%%%%%%%
+% Prep abstract %
+%%%%%%%%%%%%%%%%%
+\usepackage{abstract}
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} % originally center
+
+\renewenvironment{abstract}
+{{%
+\setlength{\leftmargin}{0mm}
+    \setlength{\rightmargin}{\leftmargin}%
+}%
+\relax}
+{\endlist}
+
+\makeatletter
+\def\@maketitle{%
+\newpage
+%  \null
+%  \vskip 2em%
+%  \begin{center}%
+\let \footnote \thanks
+{\fontsize{18}{20}\selectfont\raggedright  \setlength{\parindent}{0pt} \@title \par}%
+}
+%\fi
+\makeatother
+
+
+\setcounter{secnumdepth}{0}
+
+
+%%%%%%%%%%%%%%
+% Prep Title %
+%%%%%%%%%%%%%%
+
+\title{Guns, Butter, and the International Costs of Anarchy} %\thanks{}  }
+
+\date{}
+
+\usepackage{titlesec}
+
+%%%%%%%%%%%%%%%%
+% Section Size %
+%%%%%%%%%%%%%%%%
+
+\titleformat*{\section}{\large\bfseries}
+\titleformat*{\subsection}{\normalsize\bfseries}
+\titleformat*{\subsubsection}{\normalsize\itshape}
+\titleformat*{\paragraph}{\normalsize\itshape}
+\titleformat*{\subparagraph}{\normalsize\itshape}
+
+
+\newtheorem{hypothesis}{Hypothesis}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Additional Packages %
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{tikz} % need for tikz figures
+\usepackage{xunicode}
+
+
+% Non xelatex font options -- bitstream charter
+\usepackage[charter,cal=cmcal]{mathdesign}
+
+\usepackage{setspace}
+\setlength\parindent{24pt}
+
+\usepackage{mathtools} % math
+\usepackage[labelfont=bf]{caption}
+
+\usepackage[round]{natbib}
+
+%% Remove footnote indent
+\usepackage[hang,flushmargin]{footmisc}
+
+% add tightlist ----------
+\providecommand{\tightlist}{%
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+%%%%%%%%%%%%%%%%%%%
+% And, we're off! %
+%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% \pagenumbering{arabic}% resets `page` counter to 1
+
+{% \usefont{T1}{pnc}{m}{n}
+\setlength{\parindent}{0pt}
+\thispagestyle{plain}
+{\fontsize{20}{22}\selectfont\raggedright
+\maketitle  % title \par
+
+}
+
+%% Authors -- Enter Manually
+{
+\vskip 13.5pt\relax \normalsize
+Daniel Kent\footnote{\href{mailto:kent.249@osu.edu}{\nolinkurl{kent.249@osu.edu}}}
+\hskip 15pt \emph{\small \textit{The Ohio State University}}
+}
+
+}
+
+
+\begin{abstract}
+
+    \hbox{\vrule height .2pt width 39.14pc}
+
+    \vskip 8.5pt % \small
+
+%\noindent The spiral and deterrence models are both given pride of place in international relations theory, yet their prescriptions for state strategies and explanations of conflict point in opposing directions. Given this contrast, past work has examined which model better explains the outbreak of war and finds more support for the deterrence model. In order to investigate the reason behind the deterrence model's advantage in predictive power and how states have avoided war-inducing spirals, I construct an agent-based model of state arms spending. The model reveals that incorporating a simple guns-butter tradeoff, even if minor, heavily dampens the propensity for states to engage in arms races. This suggests that deterrence failures are a better predictor of conflict because spirals are simply too economically burdensome for most states. Moreover, an investigation of the model's final state after simulation suggests that the spiral and deterrence models may not be actually opposed, but rather should be understood as separate equilibria of a single strategic framework. The paper thus presents an early cut of a valuable theoretical synthesis and produces testable empirical hypotheses of the relationship between economic capacity and military competition.
+
+\noindent How do states limit the severity of arms races? The security dilemma -- the means by which a states makes itself more secure leave others less secure -- is given pride of place in international relations theory. Indeed, even when a security dilemma-induced arms spiral does not precede war, such costs are seen as a mutually undesirable but inescapable fact of international anarchy. Though a sizeable literature has focused on certain variables which determine the severity of the security dilemma, the degree to which these factors vary in practice has been brought reasonably under question. Despite such pessimistic forecasts, if one examines trends in military spending among various enduring rivalries, then a simple realization follows: genuine arms races (back and forth military spending) are rare. I posit that arms races, even in a world where intentions are highly uncertain and capabilities fully fungible, are infrequent because most states simply cannot afford them. To demonstrate this argument I construct an agent-based model of military spending with a guns-butter tradeoff built-in. %The model's results closely map to the real distribution of military spending since 1815.
+%\\
+%To do: Assess distributional qualities of military spending over time. I want to capture that and model it. Build in some conflict -- maybe have it occur at random by a poisson distribution with certain count parameter -- mle of actual war dist. Location is a randomly selected border. Then random draw from uniform -- if greater than the stronger state's proportion of capabilities, then the weaker state wins, otherwise not. The size of the dispute is a random draw from a uniform with a maximum the size of the larger state. If win, get the disputed amount. If this is the entire value of one state (smaller or larger) then winner gets their territory. Subsequently, if a state has more than one territory block, then sum its capabilities as the amount it projects at each location. Create a projected capabilities and cell capabilities -- that way projected is the sum of all cells and if a state has only one territory, then it's projected power is equal to its cell power.
+
+% To do: Does starting growth relate to starting wealth at all? It should.
+
+\hbox{\vrule height .2pt width 39.14pc}
+
+\end{abstract}
+
+\vskip 6.5pt
+
+\doublespacing
+
+\section{Introduction}\label{introduction}
+
+Does a country growing its military promote or deter war? According to the spiral model\footnote{This view s shared by defensive realism more broadly.}, building arms creates insecurity and promotes war. On the other hand, the deterrence model\footnote{This view instead is promoted by offensive realism.} cites a lack of military might as a cause of conflict in that it invites aggressive opportunistic states. According to these two prominent approaches to international relations theory, arming is both a cause of war and peace.
+
+In comparing the two, evidence tends to support the spiral model over the deterrence model. Why?
+
+Why is there less evidence for the spiral model than the deterrence model of conflict? Relatedly, given the relative lack of support for spirals as a cause of conflict, how do states limit the severity of arms races? The spiral model argues that states repeatedly arm in response to other states arming, creating escalating tension and then war. \citep[e.g.][]{downs1985, jervis1978, powell1993} On the other hand, the deterrence model argues that war occurs because states fail to arm in response to other states. \citep[e.g.][]{achen1989, huth1993} These two models are thought to be at odds with each other because one prescribes arming as a means of deterring conflict whereas the other cautions against arming due to the possibility of a war-inducing spiral. In comparing the two, \citet{braumoeller2008} finds that the deterrence model has been better associated with the outbreak of militarized disputes than the spiral model. Given the two models' seemingly contrary prescriptions for state behavior and their importance to IR theory, it follows to ask why the deterrence model better fits history and whether states have adopted certain strategies to limit the severity of spirals.
+
+To discuss these questions, I construct an agent-based model of state arming. Though the model is only a first-cut and has much room to grow, it reveals an important point: \textit{in an n-player world where states have finite economies, arms races rarely emerge}. Indeed, the baseline requirement for an arms race -- sufficient available economic resources\footnote{And political will/resolve, which I do not include in the model.} on all sides -- is quite difficult to meet. This suggests that the lack of spiral-induced militarized disputes throughout history are not a result of states signaling defensive intentions, as the literature would suggest. Genuine spirals may instead be rare because states cannot afford them.\footnote{I do not speak to the proportion of spirals that do lead to war, because there is no war in my model yet.} An investigation into trends in arming between some enduring rivals reveals supporting evidence for this claim.
+
+Moreover, the model's decision rule reveals room for an interesting reformulation of the deterrence-spiral problematique. A closer look at the decision to arm in each round reveals that the deterrence and spiral models are not necessarily at odds with each other. Rather, they may very well capture different equilibria of the same strategic interaction, where the equilibria vary based upon domestic constraints and neighboring arms levels. Though we are far from making such a claim conclusively, the model's ability to speak to this type of theoretical synthesis already is exciting.
+
+%Put differently, if we think of arming like a Prisoner's Dilemma, the spiral model is (defect, defect), whereas the deterrence model is (defect, cooperate) or (cooperate, defect). Because states don't know current intentions or can't be sure of future intentions, arming is a dominant strategy. The undesirable cost of interstate relations that follow are not a bug, but rather a feature of the system. Fortunately, war rarely occurs from spirals because spirals themselves are rare.
+
+% Before moving into a brief literature review and model overview, there are a few obvious steps moving forward. I'd like to make the model more closely map onto \citet{fearon2018} and include the potential for fighting over an issue, which then provides further economic benefit. Doing so, both links to the literature, captures the economic benefits of arming, and allows for me to test which outcome (D,C [deterrence] vs. D,D [spiral] is more associated with conflict -- a statistical analysis of the model). Last, there is no learning in the model. But there is no learning in any game-theoretic model of interstate competition either. Though I'd like to include learning, I'd also like for this model to speak as closely as possible to the cutting-edge, while just adding two reasonable wrinkles: a guns-butter tradeoff and more than two states.
+
+%\textbf{How do states limit the severity of arms races?} The security dilemma -- the means by which one state makes itself more secure makes others less secure -- is given pride of place in international relations theory. From its basic premise, a vast literature has grown around the causes and consequences of arms races and how they can lead to war. The logic is quite intuitive and appealing: when states arm, even for defensive purposes, other states are threatened because those arms could be used offensively; this leads other states to arm and a spiral of repeated arming and insecurity follows, potentially leading to war. \citep[e.g.][]{downs1985, jervis1978, powell1993}
+
+%Not only is this dynamic argued to be a cause of war, even if war is avoided the process of arming and re-arming is inefficient. All states are  spending more than they were before the arms race, but they are no more secure relatively speaking. Indeed, if states in the arms race could agree to stop arming and instead reduce spending equally on all sides, then relative arms levels would remain unchanged and each state would spend less on its military. The inability of states to do so has puzzled scholars and produced lengthy debates over the general ``costs of anarchy'' \citep{fearon2018} -- or simply how much states can cooperate over arms levels when there is no world government to enforce disputes. %Unsurprisingly then, scholars care deeply about the degree to which states can avoid or mitigate inefficient and potentially dangerous military spending.
+
+\section{Literature}\label{literature}
+The literature on the spiral model has long hypothesized two variables which serve to limit the severity of arms races: the offense-defense balance and how clearly offensive intentions can be distinguished from defensive intentions. The logic is fairly straightforward. The more military technology favors defense, then the less one state arming threatens the security of another. On the other hand, if technology is offense-dominant, then arming inherently is more threatening to the security of others. Moreover, if states can credibly signal that the purpose of their arming is strictly defensive, then other states may avoid arming in return.
+
+However, both mechanisms have come under strong criticisms. As \citet{biddle2001} and \citet{glaser1998} have demonstrated, the offense-defense balance is an extremely unclear concept in practice, and most defensive weapons can be easily converted into useful offensive purposes. Moreover, intentions might be defensive at one moment, but they can easily change. \citep{copeland2000} Uncertainty about \textit{future} intentions means that it may be rational to arm in return, even if intentions are defensive at the present. Strategic environments can shift, as can domestic political preferences.\footnote{There are definitely no examples of this in current events.} Furthermore, it is unclear if states can even credibly signal defensive intentions, because of the incentives to misrepresent capabilities. \citep{fearon1995}
+
+\section{Looking at the data}\label{data}
+This all then leads to a puzzling point theoretically and empirically. The logic of arms racing is fairly appealing. It makes sense for states to arm in response to other states arming, and it is unclear how to easily escape these spirals. Plus there certainly are anecdotal cases of tensions around military capabilities which could be used for offensive purposes. But a quick look at cases where arms competition is \textit{most likely} demonstrates that arms races vary substantially in severity. In figure 1 we see the cases that have driven much of the arms-race literature: European powers around WWI and the US and USSR during the Cold War. Each country's military spending maps tightly to others.
+
+\begin{figure}[!h]
+\begin{center}\resizebox{0.85\linewidth}{!}{% Resize table to fit within \linewidth
+% horizontally
+\input{arming}
+}
+\caption{Arms Races}
+\end{center}
+\end{figure}
+
+But when we look at military spending across two enduring rivalries (chosen at random) in figure 2 -- where there is \textit{good reason} to compete over military spending -- we see that in both cases one state lags behind the other. Indeed, these are the cases where we should expect arms races, but the correlation between expenditures within each dyad is quite weak. When we look at the data in this way a clear culprit presents itself: one state cannot afford to keep up with the other. India's economic capacity is far greater than Pakistan's. Saudi Arabia can afford a larger military than Iran due to oil exports. Surprisingly, as obvious as it seems, I haven't seen this point made -- that in most scenarios states actually have unintentionally mitigated the security dilemma\footnote{The means by which one state makes itself more secure tend to make others less secure.} because one state cannot keep up financially. I suspect this is due to the qualitative nature of the literature -- nobody has compiled the data and carefully analyzed it. Instead scholars tend to take arms races as a given and then study the causes of tension between rival states.
+
+\begin{figure}[!h]
+\begin{center}
+  \resizebox{0.85\linewidth}{!}{% Resize table to fit within \linewidth
+  % horizontally
+  \input{rivals}
+}
+\caption{Rival Military Spending}
+\end{center}
+\end{figure}
+
+The frontier of this research comes from \citet{fearon2018}, who argues that cooperation and conflict over military spending can be best understood by the ``war constraint'' -- states can cooperate over military spending, but only to a certain level at which there are incentives to `break out' and arm rapidly for military advantage. The article is intriguing and presents a parsimonious synthesis of various arguments, but it -- alongside the broader literature -- falls short in two key ways which an agent-based modeling approach is well-suited for. First, as just discussed, Fearon does not take into account how many resources states have available to spend on their military. And this is not without consequence. Due to the guns-butter tradeoff, money spent on the military is not spent on domestic needs. Second, like most, it is a two-state model. Insofar as I know, there have been no studies of military spending in an n-player world -- which is the kind of world we live in.
+
+\section{Model}\label{Model}
+
+In this section I walk through a the model's specifications, produce some visuals, and lay out the final arms distribution. The model is far from finished, but its initial results are promising. After discussing what the model shows, I go over how I plan to improve it.
+
+\subsection{Setup}\label{Setup}
+
+The model is setup as a 15x15 grid where each cell hosts one agent. Each agent is assumed to be a state and starts with the following parameter values: initial economic wealth, economic growth, domestic requirements, and initial weapons. Economic wealth is assigned through random draws from a pareto distribution.\footnote{The pareto distribution is often used to describe wealth distributions.} Economic growth is drawn from a truncated normal distribution where the mean is 3 percent but the distribution does not drop below 0; we don't want negative economic growth. Domestic requirements are the domestic needs that a state cannot drop below. This is drawn from a uniform distribution between 0 and 1 and multiplied by wealth. Last, initial weapons are drawn from a uniform between 0 and 1 and then multiplied by the starting wealth. As we see in figure \ref{starthist}, the initial distribution of arms follows the expected pareto distribution, with most states relatively low in arms, but a few states -- in particular one -- spend far more than the others.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale = 0.5]{arming/start_hist.png}
+    \caption{Starting arms distribution}
+    \label{starthist}
+\end{figure}
+
+\noindent Each agent's decision rule is then as follows:
+
+\begin{enumerate}
+    \item Survey neighbor arms.
+    \item Sum neighbor arms to produce a `threat neighborhood'.\footnote{This type of n-actor threat assessment is never made in models of arming.}
+    \item Assess available economic resources after domestic needs are met.
+    \item If enough resources remain to balance against the current threat, then the agent increases its arms so that it equals the amount of arms among neighbors.
+    \item If there are not enough available resources to meet one's threats, then spend all available resources on arms.
+\end{enumerate}
+
+The next series of figures are visualizations of agent arming over time. The first image demonstrates starting arms. Each cell holds one agent and the darker the blue, then the more arms that agent possesses. Curiously, though this shows the model possessing nice emergent properties, the final arms race does not occur where one would expect, given the initial layout.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale = 0.4]{arming/grid1.png}
+    \caption{Initial arms grid}
+    \label{grid1}
+\end{figure}
+
+Next, I run the model for 200 steps. Each step includes every agent assessing its neighborhood and arming in response to the aggregate threat, insofar as it can economically. The model is set so that agents arm in random order, not simultaneously. We can already see where the model is going here, if we look closely. Some competition is emerging in the center of the grid, but areas on the edges of the grid (which wraps like the world) see no change. In figure \ref{grid3} the model has run for 1000 steps. At this point the writing is on the wall; there is only one arms race in the middle of the grid. But, curiously, the state with the most arms is one that started with relatively low arms.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale = 0.4]{arming/grid2.png}
+    \caption{Arms grid after 200 steps}
+    \label{grid2}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[scale = 0.4]{arming/grid3.png}
+    \caption{Arms grid after 1000 steps}
+    \label{grid3}
+\end{figure}
+
+Last, to let the model run its course, I run it for 5,000 steps. Figure \ref{grid4} includes the final grid and shows a world in which two states are repeatedly arming in response to each other, but all other states have stayed at relatively low arms. This is a promising start in that it very closely mirrors reality. As the final distribution of arms in figure \ref{endhist} demonstrates, the final arms distribution approximates a pareto distribution where two states -- primarily one -- lead all others in arms spending. This is very much the way the world has tended to look throughout history.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale = 0.39]{arming/grid4.png}
+    \caption{Arms grid after 5000 steps}
+    \label{grid4}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale = 0.405]{arming/end_hist.png}
+    \caption{Final arms distribution}
+    \label{endhist}
+\end{figure}
+
+More importantly, seen in this simple framework both the spiral and deterrence models are clearly at play. \textit{This suggests that they are actually more compatible than generally assumed.} For the two states in the center of the grid, a spiral is at hand where each is arming back and forth at each other. Yet for the surrounding states, we see a clear deterrence failure, where they should be arming more to deter the dominant states. And by arming the dominant states do have a strategic advantage over other neighboring states. However, whether or not states find themselves in the deterrence model (failing to balance) or spiral model (costly reciprocal arming) is a function of their strategic environment and domestic constraints. We see agents competing intensely in an arms spiral, states failing to deter, and the competing states gaining great leverage over other neighbors. For all of these situations, states have no incentive to unilaterally deviate given their neighborhood and economic output.
+
+This type of theoretical synthesis is a clear benefit of the agent-based framework. Computer simulation allows for the easy accommodation of an n-player model which would be analytically overwhelming via standard game-theory. And once the outcome emerges from the model it is quite clear that a single strategic framework -- states will balance to meet threats, if it can be afforded -- not only creates a distribution of arms that mirrors reality, but also demonstrates how two seemingly opposed models are very plausibly \textit{separate equilibria in the same overall framework.} Put differently, if we simplify arming to a Prisoner's Dilemma-esque game\footnote{I.e. \citet{jervis1978}}, then the spiral model is (D,D) and deterrence failures are (D,C) and (C, D). But states are `suckered' into (D,C) or (C,D) because they cannot afford to do otherwise.
+
+To be fair, this is far from a final product, and I am clearly oversimplifying. Yet it is quite a powerful result for a first cut: allowing for a guns-butter tradeoff in an n-player model not only generates externally valid trends, it also demonstrates how two classically opposed models can be understood as separate equilibria for a simply utility function when simple parameters vary in realistic ways.
+
+
+\section{Next Steps}\label{next steps}
+
+Moving forward, there are quite a few steps I need to take before I can make the aforementioned claims credibly. First, the model needs to allow for arming to create bargaining leverage. Arming can confer economic benefits insofar as it gives states leverage in strategically important areas. In this regard, economic growth does not have to be constant, but rather can and should vary based upon how much key strategic territory/issue space a state has occupied via bargaining. Second, I need to think about how to incorporate variables like the offense-defense balance and offense-defense distinguishability into the model. Third, states do not go to war in this model. I am not sure what the decision process behind going to war should look like. It will likely be part of the bargaining process over key territory/issue space, where going to war means the state may be able to take all of the disputed space, rather than bargaining over a proportion of it. Fourth, I have not included any agent learning into this model. Though I would like to do so, I am not sure about how strategic it would be for me publication-wise, because it adds another wrinkle that is foreign to this literature.
+
+Last, incorporating \citet{fearon2018}, I want to use this setup to directly recreate Fearon's model and build upon his theory of the `costs of anarchy'. Beyond testing how prone states are to engage in arms races, a more central question around this whole literature is: how much general military spending do countries need to engage in, given the lack of a world government? In other words, just how costly does anarchy -- understood as the lack of a contract-enforcing central authority in world politics -- have to be? Fearon addresses this through a model of the `war constraint' -- a state's necessary baseline military spending -- and demonstrates how it is a function of the variables just mentioned. Alongside the value of taking his model from 2 states to an n-player world (which is far more credible), he does not touch on the guns-butter tradeoff.
+
+\section{Conclusion}\label{conclusion}
+
+In this paper I have built a simple agent-based model of arms spending. The model reveals that empirical support for the deterrence model over the spiral model is likely a product of states rarely being able to afford arms races. By incorporating a simple guns-butter tradeoff, only a single arms race emerges, despite the model including 225 agents. Moreover, the model's final state includes outcomes that correspond to both the spiral and deterrence model, suggesting that the two models are not actually at odds with each other. Rather they may very well capture separate equilibria for a single utility function, where agents fall into varying equilibria depending on domestic economic pressures and regional arms levels. Last, even from this simple setup, the model is able to closely mirror the actual distribution of military spending worldwide. Though this is a simple first cut, its ability to approximate reality is encouraging.
+
+Moving forward I hope to get this model as close as possible to Fearon's (2018) model, but in an n-player setting with a guns-butter tradeoff. In doing so I can provide a logical next step in the general debate over the `costs of anarchy'. Moreover, in doing so I will be able to better analyze the potential synthesis of the spiral and deterrence models.
+
+\singlespacing
+
+\bibliographystyle{abbrvnat}
+\bibliography{prospectus}
+
+\end{document}
