@@ -2,7 +2,7 @@ import random
 import math
 import numpy as np
 
-from scipy.stats import truncnorm
+from scipy.stats import truncnorm, pareto
 
 from mesa import Model, Agent
 from mesa.time import RandomActivation, SimultaneousActivation
@@ -21,7 +21,7 @@ class state(Agent):
             arms: level of military capacity
             econ: economy size
             growth: economic growth
-            domestic: baseline needs
+            domestic: how much rent can be extracted?
             arms: starting arms
             mil_burden: percent of economy spent on military
             adversaries: how many neighbors to consider when balancing
@@ -61,12 +61,10 @@ class state(Agent):
         # How many states to consider as a threat?
         threat = neighbor_threat.argsort()[-adversaries:]
 
-        # How much can the agent spend on its defense?
-        #necessary_costs = (self.econ * self.domestic) + self.arms
-        #available = self.econ - necessary_costs
-        domestic_costs = self.econ * self.domestic
-        available = domestic_costs * (1 - self.expenditures) - self.arms
-        #available = self.econ * self.domestic
+        # How much rent can the state extract?
+        domestic_rentmax = self.econ * self.domestic
+        # How much is left after necessary domestic spending?
+        available = domestic_rentmax * (1 - self.expenditures) #- self.arms
 
         # Difference between neighbor arms and agent's current arms?
         threat_diff = np.array(threat) - available
@@ -81,7 +79,8 @@ class state(Agent):
             balance_cost = 0
         
         # add to arms
-        self.arms = self.arms + balance_cost
+        #self.arms = self.arms + balance_cost
+        self.arms = balance_cost
         # remove from arms
         self.econ = self.econ - balance_cost
 
@@ -123,12 +122,12 @@ class EconMod(Model):
             x = cell[1]
             y = cell[2]
             if random.random() < self.density:
-                ## Set starting economy to 10 constant for all
-                econ_start = 10
-                ## Grow at 3%
+                ## Set starting economy for all
+                ##econ_start = 10
+                # Draw from pareto -- parameter set to 3, arbitrary
+                econ_start = pareto.rvs(3,1)
                 econ_growth = 0.03
-                # domestic need -- determines variation in 
-                # agent economy
+                # domestic need -- determines econ variation
                 domestic_need = np.random.uniform(
                     self.domestic_min,
                     self.domestic_max
