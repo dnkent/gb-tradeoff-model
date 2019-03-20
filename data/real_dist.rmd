@@ -1,0 +1,152 @@
+---
+title: "Descriptive Statistics on Guns and Butter"
+author: Daniel Kent
+date: "`r Sys.Date()`"
+output:     
+    tint::tintHtml:
+        toc: true
+---
+
+# Overview
+
+- What does the distribution of real world gdp, government expenditures, and military spending look like? Who are the countries with the largest military burdens? Relating to the computational model, the distribution of gdp, government expenditures, and gdp/government expenditures will give us useful starting points economically for the model.
+
+- I'm just using 2017 data here, since it likely is the highest quality and contains the least missingness. Also, since the goal is just to get a sense of distributional qualities, the most recent year should be representative of general trends.
+
+# Import the data
+
+```{R message = FALSE}
+## libraries
+library(dplyr)
+library(ggplot2)
+library(rio)
+
+## data
+econ_dat <- import("real_dat.rds")
+
+## useful manipulations
+econ_dat$mil_gdp <- econ_dat$milex/econ_dat$gdp
+econ_dat$mil_govexp <- econ_dat$milex/econ_dat$gov_exp
+econ_dat$govexp_gdp <- econ_dat$gov_exp/econ_dat$gdp
+```
+
+# Visuals
+
+## Economic capacity
+
+- These should influence the starting parameters for the model
+
+### GDP 
+
+- Raw
+
+```{R echo = FALSE, message = FALSE, warning = FALSE}
+## Military Spending/GDP
+ggplot(data = econ_dat, aes(x = gdp)) + 
+    geom_histogram() + 
+    theme_bw()
+```
+
+- Logged
+
+```{R echo = FALSE, message = FALSE, warning = FALSE}
+## Military Spending/GDP
+ggplot(data = econ_dat, aes(x = log(gdp))) + 
+    geom_histogram() + 
+    theme_bw()
+```
+
+### Gov expenditures
+
+- Raw
+
+```{R echo = FALSE, message = FALSE, warning = FALSE}
+## Military Spending/GDP
+ggplot(data = econ_dat, aes(x = gov_exp)) + 
+    geom_histogram() + 
+    theme_bw()
+```
+
+- Logged
+
+```{R echo = FALSE, message = FALSE, warning = FALSE}
+## Military Spending/GDP
+ggplot(data = econ_dat, aes(x = log(gov_exp))) + 
+    geom_histogram() + 
+    theme_bw()
+```
+
+### Gov expenditures as a percent of GDP
+
+```{R echo = FALSE, message = FALSE, warning = FALSE}
+## Military Spending/GDP
+ggplot(data = econ_dat, aes(x = govexp_gdp)) + 
+    geom_histogram() + 
+    geom_density() + 
+    theme_bw()
+
+arrange(econ_dat[,c(1:3, 9)], -govexp_gdp)[1:25,]
+```
+
+## Military spending
+
+- These should generally be generated in the model's static state
+
+### Military spending
+
+- Raw
+
+```{R echo = FALSE, message = FALSE, warning = FALSE}
+## Military Spending/GDP
+ggplot(data = econ_dat, aes(x = milex)) + 
+    geom_histogram() + 
+    theme_bw()
+```
+
+- Logged
+
+```{R echo = FALSE, message = FALSE, warning = FALSE}
+## Military Spending/GDP
+ggplot(data = econ_dat, aes(x = log(milex))) + 
+    geom_histogram() + 
+    theme_bw()
+```
+
+### Military spending as a percent of gdp
+
+```{R echo = FALSE, message = FALSE, warning = FALSE}
+## Military Spending/GDP
+ggplot(data = econ_dat, aes(x = mil_gdp)) + 
+    geom_histogram() + 
+    theme_bw()
+```
+
+### Military spending as a percent of expenditures
+
+```{R echo = FALSE, message = FALSE, warning = FALSE}
+## Military Spending/Govexp
+ggplot(data = econ_dat, aes(x = mil_govexp)) + 
+    geom_histogram() + 
+    theme_bw()
+```
+
+- Who spends the most?
+
+```{R}
+## Who spends the most?
+arrange(econ_dat[,c(1:3, 8)], -mil_govexp)[1:25,]
+```
+
+# Distributional tests
+
+- What statistical distributions best fit the observed data?
+
+- fitdistplus
+    - https://cran.r-project.org/web/packages/fitdistrplus/vignettes/paper2JSS.pdf
+    - https://cran.r-project.org/web/packages/fitdistrplus/fitdistrplus.pdf
+    - https://cran.r-project.org/web/packages/fitdistrplus/vignettes/Optimalgo.html
+    - https://cran.r-project.org/web/packages/fitdistrplus/vignettes/FAQ.html
+
+- Clauset Shalizi 
+
+- Should we actually assign the observed data to the agents in the model?

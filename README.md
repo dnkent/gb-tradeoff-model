@@ -1,8 +1,8 @@
 # Political Economy of Military Spending
 
-+ Agent-based model of military spending and competition. 
++ Computational model of military spending and competition. 
 
-+ This repository includes a python ABM of state economic growth and military competition.
++ This repository includes a python model of state economic growth and military competition.
     + For more information on the MESA python library, see: https://github.com/projectmesa/mesa
 
 + A corresponding and ongoing paper is also included. 
