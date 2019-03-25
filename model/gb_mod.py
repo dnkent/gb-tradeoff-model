@@ -2,7 +2,7 @@ import random
 import math
 import numpy as np
 
-from scipy.stats import truncnorm, pareto
+from scipy.stats import truncnorm, pareto, norm
 
 from mesa import Model, Agent
 from mesa.time import RandomActivation, SimultaneousActivation
@@ -10,6 +10,8 @@ from mesa.time import RandomActivation, SimultaneousActivation
 from mesa.space import SingleGrid
 from mesa.datacollection import DataCollector
 
+## Model functions for model evaluation:
+## Calculate distributional statistics across agents
 
 class state(Agent):
     def __init__(self, pos, model, econ_start, econ_growth, domestic_need, arms, num_adversaries, expenditures):
@@ -78,7 +80,7 @@ class state(Agent):
         else:
             balance_cost = 0
         
-        # add to arms
+        # Update arms spending -- cost of balancing (this adds up)
         #self.arms = self.arms + balance_cost
         self.arms = balance_cost
         # remove from arms
@@ -96,6 +98,7 @@ class EconMod(Model):
 
     def __init__(self, height, width, density, 
     domestic_min, domestic_max, 
+    domestic_mean, domestic_sd,
     num_adversaries, expenditures):
         '''
         '''
@@ -105,6 +108,8 @@ class EconMod(Model):
         self.density = density
         self.domestic_min = domestic_min
         self.domestic_max = domestic_max
+        self.domestic_mean = domestic_mean
+        self.domestic_sd = domestic_sd
         self.num_adversaries = num_adversaries
         self.expenditures = expenditures
 
@@ -112,10 +117,12 @@ class EconMod(Model):
         self.grid = SingleGrid(height, width, torus=True)
         self.datacollector = DataCollector(
             # Collect data on each agent's arms levels
-            agent_reporters={"Arms": "arms",
-                            "Military_Burden": "mil_burden",
-                            "Econ": "econ",
-                            "Domestic": "domestic"})
+            agent_reporters = {
+                "Arms": "arms",
+                "Military_Burden": "mil_burden",
+                "Econ": "econ",
+                "Domestic": "domestic"
+                })
 
         # Set up agents
         for cell in self.grid.coord_iter():
@@ -128,10 +135,18 @@ class EconMod(Model):
                 econ_start = pareto.rvs(3,1)
                 econ_growth = 0.03
                 # domestic need -- determines econ variation
-                domestic_need = np.random.uniform(
-                    self.domestic_min,
-                    self.domestic_max
-                    )
+                #domestic_need = np.random.uniform(
+                #    self.domestic_min,
+                #    self.domestic_max
+                #    )
+                #https://stackoverflow.com/questions/18441779/how-to-specify-upper-and-lower-limits-when-using-numpy-random-normal
+                lower, upper = self.domestic_min, self.domestic_max
+                mu, sigma = self.domestic_mean, self.domestic_sd
+                X = truncnorm(
+                    (lower - mu) / sigma, (upper - mu) / sigma, loc=mu, scale=sigma)
+                domestic_need = X.rvs(1)
+
+                
                 expenditures = self.expenditures
                 # starting percent of wealth spent on weapons
                 arms_start_perc = np.random.uniform(0, 0.06) 
@@ -156,6 +171,6 @@ class EconMod(Model):
         '''
         Run one step of the model.
         '''
-        self.schedule.step()
-        # collect data
+        # Collect data
         self.datacollector.collect(self)
+        self.schedule.step()       
