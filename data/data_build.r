@@ -15,8 +15,8 @@ states <- read_csv("states2016.csv") %>%
 ## World bank government spending
 expenditure <- wb(
     indicator = "NE.CON.GOVT.CN",
-    startdate = 2017,
-    enddate = 2017
+    startdate = 2016,
+    enddate = 2016
     )
 
 ## Merge
@@ -36,8 +36,8 @@ state_exp <- left_join(states, expenditure)
 ## World bank gdp
 gdp <- wb(
     indicator = "NY.GDP.MKTP.CN",
-    startdate = 2017,
-    enddate = 2017
+    startdate = 2016,
+    enddate = 2016
     )
 
 ## Merge
@@ -56,8 +56,8 @@ state_exp <- left_join(state_exp, gdp)
 ## Military spending -- SIPRI
 milex <- wb(
     indicator = "MS.MIL.XPND.CN",
-    startdate = 2017,
-    enddate = 2017
+    startdate = 2016,
+    enddate = 2016
     )
 
 ## Merge

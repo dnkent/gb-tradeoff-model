@@ -1,0 +1,259 @@
+% !BIB program = bibtex
+
+\documentclass[12pt]{article}
+
+% Font
+% \usepackage{fontspec} % need for minion pro
+% \usepackage{xunicode}
+% \setmainfont[Mapping=tex-text]{Minion Pro} % font
+% \setmonofont[Mapping=tex-text,Scale=MatchLowercase,BoldFont={Consolas Bold}]{Consolas} % font
+
+% Non xelatex font options -- bitstream charter
+\usepackage[charter,cal=cmcal]{mathdesign}
+
+% Margins
+\usepackage[margin = 1in]{geometry}
+
+% Math
+\usepackage{amsmath, amsfonts,mathtools}
+
+% Links
+\usepackage[colorlinks=true, urlcolor={black}, citecolor={black}, linkcolor={black}]{hyperref}
+
+% Images
+\usepackage{graphicx}
+
+% Bold Math Symbols
+\usepackage{bm}
+
+% Spacing
+\usepackage{setspace}
+\doublespacing
+
+% Margin
+\usepackage[margin = 1in]{geometry}
+
+% Images -- tikzDevice
+\usepackage{tikz}
+\usepackage[skip = 0pt]{caption}
+
+% Bibliography
+\usepackage[round]{natbib}
+
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+
+\begin{document}
+\title{\Large{The Economic Barriers to Arms Races}}
+\author{
+    Daniel Kent\footnote{\texttt{kent.249@osu.edu}}
+    }
+\date{\today}
+\maketitle
+
+
+\singlespacing
+
+\begin{abstract} 
+
+\noindent How do states limit the severity of arms races? The security dilemma -- the means by which a state makes itself more secure leave others less secure -- is given pride of place in international relations theory. Beyond the outbreak of war, the economic costs of security dilemma-induced military competitions are generally understood to be mutually undesirable by all sides. 
+However, if one compares this rich theoretical tradition to empirical data, then a puzzle emerges. Theory suggests that intense military competition and arms races should be prevalent across time and space. 
+Yet in reality most states spend relatively little of their available capital on the military and arms races are the exception, not the norm. 
+%Moreover, a closer look at historic arms races and enduring rivalries demonstrates that even in the most-likely candidates for genuine arms races, relationships tend to be asymmetric. Relative capabilities do not reflect a spiral, where each side repeatedly out-arms the other. Rather, in most enduring rivalries one state consistently lags behind another in military size. 
+Considering this empirical reality, I argue that arms races are rare not because of a state's ability to signal benign intentions or the possession of defensively-dominant technology. Arms races are rare because very few states can afford them. Most states simply cannot bear the economic costs of military parity or gaining a military advantage over their most powerful neighbors. \emph{In general, the only way to win is not to play.} 
+I demonstrate this argument through a computational model of military spending. In the model agents vary in their economic capacity and have to balance competing economic and security pressures when deciding whether to grow their military. When agents are faced with a guns-butter tradeoff and possess realistic economic traits, the model produces simulated results that closely mirror real-world trends in military spending. I conclude with remarks about next steps and a brief discussion of the model's implications for related literatures, such as the emergence of hierarchies and alliance coalitions. % The loss of autonomy associated with hierarchies and alliances is the cost, but the benefits increase the more a state is unable to externally meet its environmental needs. %The model implies two novel pathways for states seeking to end ongoing military competitions. (1) If one state's economy is substantially bigger than another's, then flooding the market and arming up exponentially can price the other state(s) out of military competition. (2) If pathways to increasing another state's domestic economic costs are available, then these can decrease their ability to continue arming as well.
+
+\end{abstract}
+
+\newpage
+\doublespacing
+\section{Introduction}
+
+How do states limit the severity of arms races? Since \citeauthor{jervis1978}' (\citeyear{jervis1978}) seminal article, the security dilemma has been given pride-of-place in international relations theory. The core idea is both concise and intuitive: the means by which a state increases its security make other states less secure. When states arm, even for defensive purposes, other states are threatened because those arms could be used offensively; one state's military growth leads other states to arm in response. A spiral of repeated arming and insecurity follows, potentially leading to war. 
+
+Beyond its link to the outbreak of war, the security dilemma is tragic because of the economic costs incurred from reciprocal arming \citep{fearon2018} and the erosion of trust it induces between states. \citep{kydd2007trust} Economically, when entrapped in the security dilemma all states are spending more on their militaries than they would be otherwise. Even worse, these states are argued to be no more secure than they were in the first place because all sides' relative capabilities have not budged. Inversely, if states in an arms race could agree to stop arming and instead reduce spending equally on all sides, then relative arms levels would remain unchanged and each state would free up capital for non-military means. The inability of states to do so has puzzled scholars and produced lengthy debates over the general ``costs of anarchy” \citeauthor{fearon2018} (\citeyear{fearon2018}) – or simply how much states can cooperate over arms level when there is no world government to enforce disputes.
+
+In this paper I present a puzzling gap between theory and reality. While most theoretical arguments about the ways in which states can escape or mitigate the security dilemma have been brought under reasonable question, actual trends are far less troubling. Arms races are rare and states tend to spend a small amount on their military relative to their gdp and overall government expenditures. Theory alone would suggest that states should be maintaining far larger militaries then they do and that arms races should be deeply prevalent. Why is this not the case? I argue that arms races and the security dilemma are primarily mitigated by economic pressures, not credible signals of intentions \citep{schultz2001looking,snyder2011cost} or defensive-dominant technologies. \citep{van1998offense} Compared to their security environment, most states lack the economic capacity to even maintain military parity with their potential adversaries.
+
+To demonstrate this argument, I compare the results of a computational model to real-world trends in military spending and economic activity. In the model agents represents states and start with realistic economic conditions. At each turn agents decide how much to spend on their military based upon their security environment and available economic resources. Throughout, agents face a guns-butter tradeoff where expanding the military draws upon a finite pool of available resources. After walking through the model I compare its simulated results to observational data.
+
+
+\section{Literature}\footnote{This is a short review. The final paper will have a much longer discussion of existing work.}
+The literature on the spiral model has long hypothesized two variables which serve to limit the severity of arms races: the offense-defense balance and how clearly offensive intentions can be distinguished from defensive intentions. The logic is fairly straightforward. The more military technology favors defense, then the less one state arming threatens the security of another. On the other hand, if technology is offense-dominant, then arming inherently is more threatening to the security of others. Moreover, if states can credibly signal that the purpose of their arming is strictly defensive, then other states may avoid arming in return.
+
+However, both mechanisms have come under strong criticisms. As \citet{biddle2001} and \citet{glaser1998} have demonstrated, the offense-defense balance is an extremely unclear concept in practice, and most defensive weapons can be easily converted into useful offensive purposes. Moreover, intentions might be defensive at one moment, but they can easily change. \citep{copeland2000} Uncertainty about \textit{future} intentions means that it may be rational to arm in return, even if intentions are defensive at the present. Strategic environments can shift, as can domestic political preferences. Furthermore, it is unclear if states can even credibly signal defensive intentions, because of the incentives to misrepresent capabilities. \citep{fearon1995}
+
+\section{Looking at the data}
+
+This discussion presents a puzzling juncture. The logic of the security dilemma is persuasive. It makes sense that even defense-oriented security measures often make other states less secure. One can see how states would arm intensely in response to other states arming, and it is unclear how to easily escape these spirals of insecurity and mistrust. And there certainly are anecdotal cases of tensions around military capabilities which could be used for offensive purposes. In figure 1 we see the two cases that have driven much of the arms-race literature: European powers around WWI and the US-USSR arms race during the Cold War. Unsurprisingly, Each country's military spending maps tightly to others.
+
+\vspace{1em}
+
+\begin{figure}[!h]
+\begin{center}\resizebox{0.95\linewidth}{!}{% Resize table to fit within \linewidth
+% horizontally
+\input{arming}
+}
+\caption{Arms races during World War I and the Cold War. For each figure the y-axis corresponds to military spending.}
+\end{center}
+\end{figure}
+
+
+But when we look at military spending across two prominent enduring rivalries -- where underlying disputes provide good reason for each state to seek a military advantage -- we see that in both cases one state lags substantially behind the other. This dynamic is displayed in figure 2. Certainly there is a correlation and both states are considering the other when investing in military capabilities. But in both cases we do not see the expected reciprocal spiral of one state gaining a military advantage and another state arming to regain an advantage, as arms races tend to be portrayed. Rather, the relationship is asymmetric, with one state trying to keep up with the other out of fear of subservience and attack. In this sense, it is not clear that the relationship is characterized by an arms race, or a smaller state doing its best to keep up with the larger state. India's economic capacity is far greater than Pakistan's. Saudi Arabia can afford a larger military than Iran due to oil exports. Although simple, to the best of my knowledge this point has not been made: in all but the most extreme scenarios the security dilemma is somewhat irrelevant because one or more states cannot afford spirals of mistrust and reciprocal arming.
+
+\begin{figure}[!h]
+    \begin{center}
+        \resizebox{0.95\linewidth}{!}{%
+            \input{rivals}
+        }
+        \caption{Rival Military Spending}
+    \end{center}
+\end{figure}
+
+
+Turning to the distribution of real-world data, as figure 3 demonstrates, most states are not directing a drastic amount of their available economic capacity toward the military. The data in figure 3 only includes data from 2016, as it is representative of past years and has less missing data than any other year. States on average spent 1.9\% of their GDP and 12.5\% of their overall government expenditures on the military in 2016. This is based upon the World Bank's `government final consumption expenditure' statistic, which is much larger than federal discretionary spending because it includes both discretionary and mandatory government spending.\footnote{\url{https://data.worldbank.org/indicator/NE.CON.GOVT.CN}}\footnote{Note that statistics referencing the federal discretionary budget in countries like the United States represent less than half of total government spending, most of which is tied up in mandatory spending toward programs like social security and medicare.} Considered in tandem, we see that, aside from a few outliers, most countries are not spending as much on their militaries and conventional wisdom would suggest relative to their economic capacity.
+
+
+\begin{figure}[!h]
+    \begin{center}
+        \resizebox{\linewidth}{!}{
+            \includegraphics{../data/mil_gdp_govexp.pdf}
+        } 
+        \caption{Distributions of 2016 Military Spending}
+    \end{center}
+\end{figure}
+
+
+Returning to the frontier of this research, \citet{fearon2018} argues that cooperation and conflict over military spending can be best understood by the ``war constraint'' -- states can cooperate over military spending insofar as no state has an incentive to `break out' and rapidly arm up so that it can attack the other. The article is intriguing and presents a parsimonious synthesis of various arguments, but it -- alongside the broader literature -- falls short in two key ways. First, as just discussed, Fearon does not take into account how many resources states have available to spend on their military or how large each state is economically. And this is not without consequence. Due to the guns-butter tradeoff, money spent on the military is not spent on domestic needs. Second, like most formal studies, it is a two-state model. Insofar as I know, there have been no models of military spending in an n-player world -- which is the kind of world we live in.
+
+\section{Model}
+
+In this section I present a computational model of military spending. In the model states decide how much to spend on their military based upon their security environment, economic capacity, and necessary non-military expenditures. One of the model's strengths is that it explicitly links domestic explanations for international politics \citep[e.g.,][]{milner2015sailing, weeks2014dictators} with systemic pressures \citep[e.g.,][]{braumoeller2008, waltz1979}. Moreover, it embraces the political-economic approach to studying state security. \citep{poast2019beyond} In the following pages I walk through a the model's specifications, visualize its output at various stages, and present the outcome of simulated parameter sweeps. Although the model is not quite finished, its results are promising and realistic.
+
+\subsection{Setup}\label{Setup}
+
+The model is setup as a 14x14 grid where each cell hosts one agent. Each agent is assumed to be a state and starts with the following variables: economic wealth, economic growth, domestic requirements, and military size. Economic wealth is assigned through random draws from a pareto distribution. To keep things simple, all state economies grow at 3\%. Each agent then has the capacity to extract a certain amount of capital from the overall economy. This is assigned through a draw from a truncated normal distribution with a minimum of 4\% and maximum of 32\% (based upon the distribution of real world government expenditures as a percent of GDP). The logic here is simple. GDP represents aggregate consumption, but the state does not have access to all of its GDP when determining spending across programs. Next, each agent must spend a certain amount of their available capital on domestic programs before turning to the military. This domestic requirement is a parameter that can be, and is, varied across simulations. For simplicity, it also is held constant across states. Last, all states start with a military, where the economy is multiplied by a constant between 0.01 and 0.06. Figure 4 includes the starting distribution of economic capacity and figure 5 the starting distribution of military spending.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale = 0.55]{images/start_hist.png}
+    \caption{Starting economic distribution}
+    \label{starthist}
+\end{figure}
+
+\noindent Each agent's decision rule is then as follows:
+
+\singlespacing
+
+\begin{enumerate}
+    \item Survey and rank military spending for \emph{n} biggest neighbors
+    \begin{itemize}
+        \item \emph{n} is a prespecified model parameter denoting the number of neighbors to consider when deciding how much to spend on the military.
+    \end{itemize}
+    \item Calculate available capital for military spending
+    \begin{itemize}
+        \item Available capital is the difference between a state's maximum total extractable capital and necessary domestic spending
+    \end{itemize}
+    \item Calculate the difference in military capacity between each potential adversary and one's own military.
+    \item If one's available capital is larger than the military difference relative to any potential adversaries, then balance against the largest of these states.
+    \item If one's available capital is smaller than the military difference relative to all potential adversaries, then do not spend any capital on the military. 
+    \begin{itemize}
+        \item Any capital not spent on the military remains untouched and can be increased due to economic growth.
+    \end{itemize}
+\end{enumerate}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[scale = 0.55]{images/start_mil_hist.png}
+    \caption{Starting military distribution}
+    \label{startmilhist}
+\end{figure}
+
+
+\doublespacing
+
+The next series of figures are visualizations of agent arming over time. The first image -- figure 6 -- demonstrates starting arms. Each cell holds one agent and the darker the blue, then the more arms that agent possesses. I then show in figure 7 the model's steady-state after 1000 iterations. For these two figures, I set $n$ -- the number of adversaries to consider -- at 4 (out of a 8 possible)\footnote{The idea here is a nod to Schelling's model of segregation -- agents don't want to be in the weakest half of their neighborhood.} and 50\% of available capital has to be spent on domestic purposes first. In the final simulations, these parameters are varied across all possible values. 
+
+%Curiously, though this shows the model possessing nice emergent properties, the final arms race does not occur where one would expect, given the initial layout.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale = 0.45]{images/start_mil.png}
+    \caption{Initial arms grid}
+    \label{start_arms}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[scale = 0.45]{images/final_mil.png}
+    \caption{Final arms grid}
+    \label{end_arms}
+\end{figure}
+
+The grid for final military spending is certainly interesting, with realistic qualities. One agent outspends others by an order of significant magnitude. And a few regional powers stick out. However, pure military spending is not the best measure. Two countries may not be spending that much relative to other larger countries, but still be engaged in an arms race. A more useful statistic is to see how much states are spending of their available capital on the military. If the security dilemma is in full force, then states should be spending the majority of their available capital on the military. If states are not spending most of their available capital, then they are tending to not arm up because of the associated expenses. 
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[scale = 0.45]{images/final_mil_cap.png}
+    \caption{Final military spending as a percent of available capital}
+    \label{end_milcap}
+\end{figure}
+
+Figure 8 bears us out. Although pockets of military competition certainly exist, the vast majority of agents are spending below half of their available capital on the military. The average actually sits around 20\%. Most states are maintaining a relatively low-cost parity with their neighbors. This of course, however, is a stylized example with hand-picked starting values. What happens when we run a parameter sweep?
+
+\subsection{Parameter sweep}
+
+In this section I run the model for 1000 iterations at varying parameter values. The two parameters that vary are: (1) $n$: the top n neighbors capability-wise to consider when deciding whether to balance and (2) the percent of possible capital that must go to domestic programs first. $n$ ranges from 1 to 8 and domestic requirements vary from 0 to 0.9. For each figure, the x-axis represents the domestic spending parameter and there is a separate line for each value of $n$. The y-axis is the final percent of agents spending under a certain amount of available capital on the military for the parameter combination.
+
+First, what percent of states end up spending below 20\% of available capital?
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[scale = 0.825]{images/sim_20.png}
+    \label{sub_20}
+\end{figure}
+
+\noindent 40\%?
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[scale = 0.825]{images/sim_40.png}
+    \label{sub_40}
+\end{figure}
+
+\newpage
+\noindent 60\%?
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[scale = 0.825]{images/sim_60.png}
+    \label{sub_60}
+\end{figure}
+
+The major takeaway here is that unless states are considering all possible neighbors seriously when arming, most, if not all spend relatively little of their available capital on the military. When a simple guns-butter tradeoff is built into a model of military spending, generating a multitude of arms-races becomes incredibly difficult. Also, an interesting non-linear dynamic emerges which I have not yet made sense of, but will consider more closely as the project progresses.
+
+\section{Next Steps and Questions}\label{next steps}
+
+The model's strength is in its simplicity. From a parsimonious starting point and a straightforward decision-rule interesting and realistic properties emerge. But I have intentionally left out quite a few variables and potential decisions. There are no alliances. States are not bargaining over any issues. War does not occur. I think adding these variables would hurt the model more than help it, because of the added internal complexity. But I want to see what others think. Also, is the argument \emph{too obvious?} It wasn't to me until I started looking at the data, but that might be a reflection of me, not others.
+
+The model also has implications for the literature on hierarchy and alliance formation. Hierarchies and alliances have benefits, but they also have costs. Both incur a loss of autonomy for member states (unless they sit atop the hierarchy). When is the loss of autonomy from hierarchy and alliance membership outweighed by the benefits? This model suggests that for most states internal balancing is infeasible, so the only way to ensure the protection of assets and domestic security is through other states. The greater the impact of the guns-butter tradeoff when growing one's military, then the more attractive a hierarchy or alliance will be.
+
+My next step is more carefully interpreting the model's output. I want to get a better sense of the non-linear final state and run some statistical models on simulated data. 
+
+\section{Conclusion}
+
+In this paper I ask how states limit the severity of the security dilemma and arms races. I argue that arms races are rare and most states are not heavily impacted by the security dilemma because of economic constraints. Most states simply cannot afford intense generally an unavoidable reality. I assess this argument with a computational model of military spending where states face a realistic guns-butter tradeoff. From a simple starting point the model produces final results that reflect reality quite well. The model also reveals the necessity of extreme environmental and domestic pressures to create final results that mirror the security dilemma's expectations. Last, the model provides evidence in favor of the deterrence model as a more realistic explanation of interstate behavior than the spiral model \citep{braumoeller2008}, because spirals are generally infeasible.  Moving forward I intend to more carefully connect simulated results to observational data.
+
+%Moving forward, there are quite a few steps I need to take before I can make the aforementioned claims credibly. First, the model needs to allow for arming to create bargaining leverage. Arming can confer economic benefits insofar as it gives states leverage in strategically important areas. In this regard, economic growth does not have to be constant, but rather can and should vary based upon how much key strategic territory/issue space a state has occupied via bargaining. Second, I need to think about how to incorporate variables like the offense-defense balance and offense-defense distinguishability into the model. Third, states do not go to war in this model. I am not sure what the decision process behind going to war should look like. It will likely be part of the bargaining process over key territory/issue space, where going to war means the state may be able to take all of the disputed space, rather than bargaining over a proportion of it. Fourth, I have not included any agent learning into this model. Though I would like to do so, I am not sure about how strategic it would be for me publication-wise, because it adds another wrinkle that is foreign to this literature.
+
+% Last, incorporating \citet{fearon2018}, I want to use this setup to directly recreate Fearon's model and build upon his theory of the `costs of anarchy'. Beyond testing how prone states are to engage in arms races, a more central question around this whole literature is: how much general military spending do countries need to engage in, given the lack of a world government? In other words, just how costly does anarchy -- understood as the lack of a contract-enforcing central authority in world politics -- have to be? Fearon addresses this through a model of the `war constraint' -- a state's necessary baseline military spending -- and demonstrates how it is a function of the variables just mentioned. Alongside the value of taking his model from 2 states to an n-player world (which is far more credible), he does not touch on the guns-butter tradeoff.
+
+\newpage
+\singlespacing
+
+\bibliographystyle{abbrvnat}
+\bibliography{gb_trade}
+
+
+\end{document}

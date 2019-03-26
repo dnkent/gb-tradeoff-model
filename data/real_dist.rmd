@@ -20,6 +20,7 @@ output:
 library(dplyr)
 library(ggplot2)
 library(rio)
+library(tikzDevice)
 
 ## data
 econ_dat <- import("real_dat.rds")
@@ -116,18 +117,60 @@ ggplot(data = econ_dat, aes(x = log(milex))) +
 
 ```{R echo = FALSE, message = FALSE, warning = FALSE}
 ## Military Spending/GDP
-ggplot(data = econ_dat, aes(x = mil_gdp)) + 
+mil_gdp <- ggplot(data = econ_dat, aes(x = mil_gdp)) + 
     geom_histogram() + 
-    theme_bw()
+    theme_bw() + 
+    labs(
+        x = "Percent of GDP",
+        y = "Count",
+        title = "Military Spending/GDP"
+    ) + 
+    theme(
+        text = element_text(size = 12),
+        axis.text = element_text(color = 'black')
+    )
+
+#ggsave(
+#    filename = "mil_gdp.pdf",
+#    mil_gdp
+#)
 ```
 
 ### Military spending as a percent of expenditures
 
 ```{R echo = FALSE, message = FALSE, warning = FALSE}
 ## Military Spending/Govexp
-ggplot(data = econ_dat, aes(x = mil_govexp)) + 
+mil_govexp <- ggplot(data = econ_dat, aes(x = mil_govexp)) + 
     geom_histogram() + 
-    theme_bw()
+    theme_bw() + 
+    labs(
+        x = "Percent of Government Expenditures",
+        y = "Count",
+        title = "Military Spending/Gov Spending"
+    ) + 
+    theme(
+        text = element_text(size = 12),
+        axis.text = element_text(color = 'black')
+    )
+
+#ggsave(
+#    filename = "mil_govexp.pdf",
+#    mil_govexp
+#)
+```
+
+### Side-by-Side
+
+```{R}
+require(cowplot)
+mil_gdp_govexp <- plot_grid(mil_gdp, mil_govexp, ncol = 2)
+
+#ggsave(
+#    filename = "mil_gdp_govexp.pdf",
+#    mil_gdp_govexp,
+#    width = 8,
+#    height = 4
+#)
 ```
 
 - Who spends the most?
